@@ -253,7 +253,8 @@ def playHand(hand, wordList, n):
         else:
             # If the word is not valid
             if not isValidWord(players_move, hand, wordList):
-                print("Invalid word, please try again.",  end="\n") # Reject invalid word (print a message followed by a blank line)
+                print("Invalid word, please try again.")
+                print() # Reject invalid word (print a message followed by a blank line)
             else:
             # Otherwise (the word is valid)
                 total_score += getWordScore(players_move, n)
@@ -266,8 +267,10 @@ def playHand(hand, wordList, n):
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     if calculateHandlen(hand) > 0:
         print("Goodbye! Total score: {} points. ".format(total_score))
+        print()
     else:
         print("Run out of letters. Total score: {} points.".format(total_score))
+        print()
 
 
 
@@ -287,9 +290,27 @@ def playGame(wordList):
  
     2) When done playing the hand, repeat from step 1    
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this line when you code the function
-   
+    current_hand = {}
+
+    while True:
+        players_option = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+
+        if players_option == 'n':
+            current_hand = dealHand(HAND_SIZE)
+            playHand(current_hand, wordList, HAND_SIZE)
+
+        elif players_option == 'r':
+            if not current_hand:
+                print("You have not played a hand yet. Please play a new hand first!")
+                print()
+            else:
+                playHand(current_hand, wordList, HAND_SIZE)
+
+        elif players_option == 'e':
+            break
+
+        else:
+            print("Invalid command.")
 
 
 
