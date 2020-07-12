@@ -235,34 +235,40 @@ def playHand(hand, wordList, n):
       n: integer (HAND_SIZE; i.e., hand size required for additional points)
       
     """
-    # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of the total score
-    
+    total_score = 0
+
     # As long as there are still letters left in the hand:
-    
-        # Display the hand
-        
-        # Ask user for input
-        
-        # If the input is a single period:
-        
+    while calculateHandlen(hand) > 0:
+        print("Current Hand: ", end=" ")
+        displayHand(hand) # Display the hand
+        players_move = input("Enter word, or a \".\" to indicate that you are finished: ") # Ask user for input
+
+        # If the input is a single period
+        if players_move == '.':
+            break
             # End the game (break out of the loop)
 
-            
         # Otherwise (the input is not a single period):
-        
-            # If the word is not valid:
-            
-                # Reject invalid word (print a message followed by a blank line)
+        else:
+            # If the word is not valid
+            if not isValidWord(players_move, hand, wordList):
+                print("Invalid word, please try again.",  end="\n") # Reject invalid word (print a message followed by a blank line)
+            else:
+            # Otherwise (the word is valid)
+                total_score += getWordScore(players_move, n)
+                print("\" {} \" earned {} points. Total: {} points".format(players_move, getWordScore(players_move, n), total_score))
+                print() # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
 
-            # Otherwise (the word is valid):
-
-                # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-                
-                # Update the hand 
-                
+                # Update the hand
+                hand = updateHand(hand, players_move)
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
+    if calculateHandlen(hand) > 0:
+        print("Goodbye! Total score: {} points. ".format(total_score))
+    else:
+        print("Run out of letters. Total score: {} points.".format(total_score))
+
 
 
 #
